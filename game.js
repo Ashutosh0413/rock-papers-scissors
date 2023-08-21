@@ -17,10 +17,51 @@ function playRound(playerSelection,computerSelection){
     else if((playerSelection==='rock' && computerSelection==='scissors') || 
     (playerSelection==='paper' && computerSelection==='rock') || 
     (playerSelection==='scissors' && computerSelection==='paper')){
-        return `You win ${playerSelection} beats ${computerSelection}`
+        return 'playerWon'
     }
     else{
-        return `You lose ${computerSelection} beats ${playerSelection}`
+        return 'computerWon'
      }
 }
+
+// 5 round game
+
+function game(){
+    playerScore = 0;
+    computerScore= 0;
+    
+    // looping through the rounds
+    for (rounds=1;rounds<=5;rounds++){
+        const playerChoice = prompt("Enter your weapon: ");
+        const computerChoice= getComputerChoice();
+
+        const result = playRound(playerChoice,computerChoice);
+        if(result==='playerWon'){
+            playerScore++;
+        } else if(result ==='computerWon'){
+            computerScore++;
+        }
+
+        console.log(`Round:${rounds} \n Player Weapon: ${playerChoice}\n Computer Weapon: ${computerChoice}`);
+        console.log(`Result of round ${rounds}: ${result}`);
+    }
+    //game over scoreboard
+    console.log("GAME OVER");
+    console.log(`Player Score = ${playerScore}`);
+    console.log(`Computer Score = ${computerScore}`);
+    //results
+    if (playerScore > computerScore) {
+        console.log("You win the game!");
+      } else if (playerScore < computerScore) {
+        console.log("You lose the game!");
+      } else {
+        console.log("It's a tie game!");
+      }
+    }
+    
+
+
+
+
+
 
