@@ -24,62 +24,50 @@ function playRound(playerSelection,computerSelection){
      }
 }
 
+const resultDiv = document.createElement('div');
+document.body.appendChild(resultDiv);
+
+// Rest of your code (getComputerChoice, playRound functions)...
+
 const rockButton = document.getElementById('rock');
 const paperButton = document.getElementById('paper');
 const scissorButton = document.getElementById('scissor');
 
-function logMatchOutcome(playerSelection){
-    const computerChoice = getComputerChoice();
-    const resultForMatch = playRound(playerSelection,computerChoice);
-    console.log(`Player selected : ${playerSelection}, Computer Selected : ${computerChoice}, Result:${resultForMatch}`);
+let playerScore = 0;
+let computerScore = 0;
 
+function logMatchOutcome(playerSelection) {
+    const computerChoice = getComputerChoice();
+    const resultForMatch = playRound(playerSelection, computerChoice);
+
+    resultDiv.innerHTML += `Player selected: ${playerSelection}, Computer Selected: ${computerChoice}, Result: ${resultForMatch}<br>`;
+
+    if (resultForMatch === 'playerWon') {
+        playerScore++;
+    } else if (resultForMatch === 'computerWon') {
+        computerScore++;
+    }
+
+    resultDiv.innerHTML += `Player Score: ${playerScore}, Computer Score: ${computerScore}<br><br>`;
+
+    if (playerScore === 5) {
+        resultDiv.innerHTML += "Player wins the game!";
+        disableButtons();
+    } else if (computerScore === 5) {
+        resultDiv.innerHTML += "Computer wins the game!";
+        disableButtons();
+    }
 }
 
 rockButton.addEventListener('click', () => logMatchOutcome('rock'));
-paperButton.addEventListener('click', ()=> logMatchOutcome('paper'));
-scissorButton.addEventListener('click',()=>logMatchOutcome('scissor'));
+paperButton.addEventListener('click', () => logMatchOutcome('paper'));
+scissorButton.addEventListener('click', () => logMatchOutcome('scissors'));
+
+function disableButtons() {
 
 
-
-// 5 round game
-
-/*
-function game(){
-    playerScore = 0;
-    computerScore= 0;
-    
-    // looping through the rounds
-    for (rounds=1;rounds<=5;rounds++){
-        const playerChoice = prompt("Enter your weapon: ");
-        const computerChoice= getComputerChoice();
-
-        const result = playRound(playerChoice,computerChoice);
-        if(result==='playerWon'){
-            playerScore++;
-        } else if(result ==='computerWon'){
-            computerScore++;
-        }
-
-        console.log(`Round:${rounds} \n Player Weapon: ${playerChoice}\n Computer Weapon: ${computerChoice}`);
-        console.log(`Result of round ${rounds}: ${result}`);
-    }
-    //game over scoreboard
-    console.log("GAME OVER");
-    console.log(`Player Score = ${playerScore}`);
-    console.log(`Computer Score = ${computerScore}`);
-    //results
-    if (playerScore > computerScore) {
-        console.log("You win the game!");
-      } else if (playerScore < computerScore) {
-        console.log("You lose the game!");
-      } else {
-        console.log("It's a tie game!");
-      }
-    }
-    
-
-*/
-
-
-
+    rockButton.disabled = true;
+    paperButton.disabled = true;
+    scissorButton.disabled = true;
+}
 
