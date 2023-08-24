@@ -24,8 +24,26 @@ function playRound(playerSelection,computerSelection){
      }
 }
 
+const rockButton = document.getElementById('rock');
+const paperButton = document.getElementById('paper');
+const scissorButton = document.getElementById('scissor');
+
+function logMatchOutcome(playerSelection){
+    const computerChoice = getComputerChoice();
+    const resultForMatch = playRound(playerSelection,computerChoice);
+    console.log(`Player selected : ${playerSelection}, Computer Selected : ${computerChoice}, Result:${resultForMatch}`);
+
+}
+
+rockButton.addEventListener('click', () => logMatchOutcome('rock'));
+paperButton.addEventListener('click', ()=> logMatchOutcome('paper'));
+scissorButton.addEventListener('click',()=>logMatchOutcome('scissor'));
+
+
+
 // 5 round game
 
+/*
 function game(){
     playerScore = 0;
     computerScore= 0;
@@ -60,7 +78,7 @@ function game(){
     }
     
 
-
+*/
 
 
 
