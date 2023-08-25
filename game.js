@@ -17,57 +17,63 @@ function playRound(playerSelection,computerSelection){
     else if((playerSelection==='rock' && computerSelection==='scissors') || 
     (playerSelection==='paper' && computerSelection==='rock') || 
     (playerSelection==='scissors' && computerSelection==='paper')){
-        return 'playerWon'
+        return 'You won the round!'
     }
     else{
-        return 'computerWon'
+        return 'Computer won the round!'
      }
 }
 
-const resultDiv = document.createElement('div');
-document.body.appendChild(resultDiv);
 
 // Rest of your code (getComputerChoice, playRound functions)...
 
 const rockButton = document.getElementById('rock');
 const paperButton = document.getElementById('paper');
 const scissorButton = document.getElementById('scissor');
+const playerCurrentScore = document.getElementById('playerScore');
+const computerCurrentScore = document.getElementById('computerScore');
+const matchResult = document.getElementById('roundResults');
+const resetButton = document.querySelector('.resetBtn');
+const resultsLabel = document.getElementById('resultsLabel');
 
 let playerScore = 0;
 let computerScore = 0;
+let gameState = false;
 
-function logMatchOutcome(playerSelection) {
-    const computerChoice = getComputerChoice();
-    const resultForMatch = playRound(playerSelection, computerChoice);
+function rockPaperScissor(playerSelection){
+    if (gameState){
+        return;
+    }
+    const inGameComputerChoice = getComputerChoice();
+    const gameResult = playRound(playerSelection,inGameComputerChoice);
 
-    resultDiv.innerHTML += `Player selected: ${playerSelection}, Computer Selected: ${computerChoice}, Result: ${resultForMatch}<br>`;
+    matchResult.textContent= `Player Selected = ${playerSelection}, Computer Selected =${inGameComputerChoice}, Result = ${gameResult}`;
 
-    if (resultForMatch === 'playerWon') {
+    if (gameResult === 'You won the round!') {
         playerScore++;
-    } else if (resultForMatch === 'computerWon') {
+    } else if (gameResult === 'Computer won the round!') {
         computerScore++;
     }
 
-    resultDiv.innerHTML += `Player Score: ${playerScore}, Computer Score: ${computerScore}<br><br>`;
+    playerCurrentScore.textContent=`${playerScore}`;
+    computerCurrentScore.textContent=`${computerScore}`;
 
     if (playerScore === 5) {
-        resultDiv.innerHTML += "Player wins the game!";
-        disableButtons();
+        resultsLabel.textContent = "Player wins the game!";
+        gameState= true;
     } else if (computerScore === 5) {
-        resultDiv.innerHTML += "Computer wins the game!";
-        disableButtons();
+        resultsLabel.textContent = "Computer wins the game!";
+        gameState = true;
+
     }
+
+    
+    
+
+
 }
-
-rockButton.addEventListener('click', () => logMatchOutcome('rock'));
-paperButton.addEventListener('click', () => logMatchOutcome('paper'));
-scissorButton.addEventListener('click', () => logMatchOutcome('scissors'));
-
-function disableButtons() {
-
-
-    rockButton.disabled = true;
-    paperButton.disabled = true;
-    scissorButton.disabled = true;
-}
+rockButton.addEventListener('click', () => rockPaperScissor('rock'));
+paperButton.addEventListener('click', () => rockPaperScissor('paper'));
+scissorButton.addEventListener('click', () => rockPaperScissor('scissors'));
+resetButton.addEventListener('click',()=>location.reload())
 
